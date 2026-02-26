@@ -1,0 +1,79 @@
+:root {
+    /* Doğa Teması Renkleri */
+    --bg-deep-forest: #0b1a10;      /* Çok koyu yeşil, arka plan */
+    --panel-moss: #1a2e1f;          /* Yosun yeşili, paneller için */
+    --accent-leaf: #4ade80;         /* Parlak yaprak yeşili, vurgular için */
+    --accent-gold: #facc15;         /* Güneş ışığı/altın, XP ve seviye için */
+    --text-cream: #ecfdf5;          /* Göz yormayan krem rengi yazı */
+    
+    /* Senin istediğin Linear Gradientlar */
+    --grad-nature: linear-gradient(135deg, #2d5a27 0%, #1a2e1f 100%); /* Paneller için */
+    --grad-button: linear-gradient(90deg, #4ade80 0%, #22c55e 100%);  /* Butonlar için */
+    --grad-xp: linear-gradient(90deg, #facc15 0%, #fbbf24 100%);      /* XP Barı için */
+} 
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: var(--bg-deep-forest);
+    color: var(--text-cream);
+    font-family: 'Exo 2' , sans-serif;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    min-height: 100vh;
+}
+#hero-stats{
+    background-color: var(--grad-nature);
+    padding: 30px;
+    border-right: 2px solid var(--accent-leaf);
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+h2, #level-value, #xp-value{
+    font-family: 'Orbitron', sans-serif;
+    color: var(--accent-gold);
+    letter-spacing: 1px;
+}
+.xp-bar-bg{
+    width: 100%;
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0.5); /* yarı saydam siyah bar arkaplanı */
+    border-radius: 10px;
+    border: 1px solid var(--accent-leaf);
+    overflow: hidden;
+}#xp-bar-fill{
+    height: 100%;
+    width: 0%;
+    background: var(--grad-xp);
+    transition: width 1s ease-out;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

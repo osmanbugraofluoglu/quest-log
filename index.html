@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;600&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header id="hero-stats">
+            <div class="profile-info">
+                <h2>OBO</h2>
+                <p>Seviye: <span id="level-value">1</span></p>
+            </div>
+            <div class="xp-container">
+                <span>XP: </span>
+                <div class="xp-bar-bg">
+                    <div id="xp-bar-fill"></div>
+                </div>
+                <span id="xp-value">0/100</span>
+            </div>
+        </header>
+
+        <main id="app-container">
+            <section id="task-input-section">
+                <input type="text" id="task-input" placeholder="Yeni görev yaz (Örn: Kitap oku)...">
+                <button id="add-task-btn">Görevi Ekle</button>
+            </section>
+            <section id="task-list-section">
+                <h3>Aktif Görevler</h3>
+                <ul id="task-list"></ul>
+                <!-- içini boş bıraktık çünkü buraya js ile dinamik olarak büyüyen bir liste oluşturacağız -->
+            </section>
+        </main>
+    </div>
+
+
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
