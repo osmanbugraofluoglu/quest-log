@@ -1,12 +1,11 @@
 :root {
-    /* Doğa Teması Renkleri */
     --bg-deep-forest: #0b1a10;      /* Çok koyu yeşil, arka plan */
     --panel-moss: #1a2e1f;          /* Yosun yeşili, paneller için */
     --accent-leaf: #4ade80;         /* Parlak yaprak yeşili, vurgular için */
     --accent-gold: #facc15;         /* Güneş ışığı/altın, XP ve seviye için */
     --text-cream: #ecfdf5;          /* Göz yormayan krem rengi yazı */
     
-    /* Senin istediğin Linear Gradientlar */
+    /* Linear Gradientlar */
     --grad-nature: linear-gradient(135deg, #2d5a27 0%, #1a2e1f 100%); /* Paneller için */
     --grad-button: linear-gradient(90deg, #4ade80 0%, #22c55e 100%);  /* Butonlar için */
     --grad-xp: linear-gradient(90deg, #facc15 0%, #fbbf24 100%);      /* XP Barı için */
@@ -36,7 +35,7 @@ body{
     gap: 25px;
 }
 .profile-info p {
-    font-size: 1.1em;
+    font-size: 18px;
     margin-top: 5px;
 }
 h2, #level-value, #xp-value{
@@ -45,14 +44,14 @@ h2, #level-value, #xp-value{
     letter-spacing: 1px;
 }
 #level-value {
-    font-weight: bold; /* Veya Orbitron'un kalınlık desteklerine göre 700 / 900 */
-    font-size: 1.5em; /* Rakamı metinden net bir şekilde ayırıp büyüt */
+    font-weight: bold;
+    font-size: 24px; 
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.6); /* Altın rengi hafif bir neon parlama */
 }
 .xp-bar-bg{
     width: 100%;
     height: 20px;
-    background-color: rgba(0, 0, 0, 0.5); /* yarı saydam siyah bar arkaplanı */
+    background-color: rgba(0, 0, 0, 0.5); 
     border-radius: 10px;
     border: 1px solid var(--accent-leaf);
     overflow: hidden;
@@ -64,32 +63,32 @@ h2, #level-value, #xp-value{
 }
 .xp-info {
     display: flex;
-    justify-content: space-between; /* XP'yi sola, sayıları sağa yaslar */
+    justify-content: space-between; 
     align-items: center;
-    margin-bottom: 5px; /* Bar ile yazılar arasına minik bir nefes boşluğu */
+    margin-bottom: 5px; 
     font-weight: bold;
-    font-size: 0.9em; /* Sayılar çok kaba durmasın diye hafif küçülttük */
+    font-size: 15px; 
 }
 /* Alt İstatistik Paneli */
 .extra-stats {
-    margin-top: 100px; /* Üstteki bar ile arasını açar, boşluğu doldurur */
+    margin-top: 100px; 
     padding-top: 25px;
-    border-top: 1px dashed rgba(255, 255, 255, 0.2); /* Üstüne ince, kesik bir çizgi çeker */
-    color: rgba(255, 255, 255, 0.6); /* Yazıları hafif soluk (gri/beyaz) yapar */
+    border-top: 1px dashed rgba(255, 255, 255, 0.2); 
+    color: rgba(255, 255, 255, 0.6); 
     font-size: 15px;
 }
 
 .stat-row {
     display: flex;
-    justify-content: space-between; /* Yazı sola, sayı sağa */
+    justify-content: space-between; 
     align-items: center;
     margin-bottom: 25px;
 }
 
 /* Sadece Rakamların Stili */
 .stat-row span:last-child {
-    color: var(--accent-gold); /* Senin o meşhur altın sarın */
-    font-family: 'Orbitron', sans-serif; /* Rakamlar yine bilimkurgu fontunda */
+    color: var(--accent-gold); 
+    font-family: 'Orbitron', sans-serif; 
     font-weight: bold;
     font-size: 18px;
 }
@@ -191,16 +190,12 @@ h2, #level-value, #xp-value{
 
 .task-item.completed span {
     text-decoration: line-through;
-    opacity: 0.7; /* Yazı biraz daha sönük olsun */
+    opacity: 0.7; 
 }
 .task-item.completed{
     border-left: 4px solid gray;
 }
-/* Butonun kendi halini netleştir (Daha güçlü seçici) */
-#completed-task-list .task-item .delete-btn {
-    opacity: 1 !important; /* !important ile kesinlikle parlamasını sağla */
-    filter: none; /* Griliği tamamen kaldır */
-}
+
 /* Üzerine gelince efekt devam etsin */
 #completed-task-list .task-item .delete-btn:hover {
     transform: scale(1.1);
@@ -220,7 +215,7 @@ h2, #level-value, #xp-value{
     cursor: pointer;
     transition: transform 0.2s, background-color 0.2s;
 }
-/* TAMAMLA BUTONU - Yaprak Yeşili */
+/* TAMAMLA BUTONU */
 .complete-btn{
     background-color: var(--accent-leaf);
     color: var(--bg-deep-forest);

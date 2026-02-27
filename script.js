@@ -12,7 +12,7 @@ const levelValueElement = document.getElementById("level-value");
 const xpValueElement = document.getElementById("xp-value");
 const xpBarFillElement = document.getElementById("xp-bar-fill");
 
-// 3. OYUNUN MATEMATİKSEL DEĞERLERİ (STATE)
+// 3. OYUNUN MATEMATİKSEL DEĞERLERİ
 let currentLevel = 1;
 let currentXP = 0;
 let requiredXP = 100;
@@ -31,7 +31,7 @@ const updateExtraStatsUI = () => {
 
 // 4. GÖREV EKLEME FONKSİYONU (ARROW FUNCTION)
 const addTask = () => {
-    //Kutudaki yazıyı al ve etrafındaki boşlukları sil (trim)
+    //Kutudaki yazıyı al ve etrafındaki boşlukları sil
     const taskText = taskInput.value.trim();
 
     if (taskText === "") {
@@ -42,11 +42,11 @@ const addTask = () => {
     const newTaskItem = document.createElement("li");
     newTaskItem.className = "task-item";
 
-    // Görev metni için bir span (yazı kutusu) oluşturalım
+    // Görev metni için bir span  oluşturalım
     const taskSpan = document.createElement("span");
     taskSpan.textContent = taskText;
 
-    // BUTON KAPSAYICISI (Sağ tarafa butonları dizmek için)
+    // BUTON KAPSAYICISI 
     const btnContainer = document.createElement("div");
     btnContainer.className = "task-buttons";
 
@@ -66,18 +66,18 @@ const addTask = () => {
         //KARTI TAMAMLANDI STİLİNE SOK
         newTaskItem.classList.add("completed");
 
-        // Kartı "Aktifler" listesinden al, "Tamamlananlar" listesine taşı
+        // Kartı Aktifler listesinden al, "Tamamlananlar" listesine taşı
         const completedTaskList = document.getElementById("completed-task-list");
         completedTaskList.appendChild(newTaskItem);
 
-        // Tamamlanan görevde artık butona gerek yok, butonu kaldır
+        // Tamamlanan görevde artık butona gerek yok
         completeBtn.remove();
 
-        currentXP += 30; //puanı artır
+        currentXP += 30; 
         updateUI();
         
         console.log("Görev başarıyla tamamlananlara taşındı!");
-        totalCompleted++; // Tamamlanan sayısını 1 artırır
+        totalCompleted++;
         totalEarnedXP += 30; 
         updateExtraStatsUI(); // Ekranda rakamları anında günceller
     })
@@ -85,19 +85,19 @@ const addTask = () => {
     // SİL BUTONU EYLEMİ
     deleteBtn.addEventListener('click', () => {
         
-        // 1. ADALET KONTROLÜ: Kartın üstünde "completed" sınıfı YOKSA cezayı kes
+        // Kartın üstünde "completed" sınıfı yoksa artır
         if (!newTaskItem.classList.contains("completed")) {
             totalDeleted++; // Sadece aktif bir görevden vazgeçildiyse sayıyı artır
         }
 
-        // 2. İNFAZ: Kartı her halükarda dünyadan (DOM'dan) tamamen sil
+        // Kartı her halükarda dünyadan tamamen sil
         newTaskItem.remove();
 
-        // 3. EKRANI GÜNCELLE: Yeni rakamları istatistik paneline yansıt
+        // Yeni rakamları istatistik paneline yansıt
         updateExtraStatsUI(); 
     });
 
-    // ELEMANLARI BİRBİRİNE BAĞLAMA (İç içe yerleştirme)
+    // ELEMANLARI BİRBİRİNE BAĞLAMA)
     btnContainer.appendChild(completeBtn);
     btnContainer.appendChild(deleteBtn);
 
@@ -119,7 +119,7 @@ addTaskBtn.addEventListener("click", addTask);
 
 // 6. İSTATİSTİK GÜNCELLEME FONKSİYONU
 const updateUI = () => {
-    // 1. Seviye atlama kontrolünü en başta, mola vermeden yap
+    // Seviye atlama kontrolünü en başta, mola vermeden yap
     if (currentXP >= requiredXP) {
         currentXP = currentXP - requiredXP;
         currentLevel++;
@@ -127,7 +127,7 @@ const updateUI = () => {
         alert(`TEBRİKLER! ${currentLevel}. Seviyeye Yükseldin.`);
     }
 
-    // 2. Her şeyi tek seferde ekrana bas
+    // Her şeyi tek seferde ekrana bas
     levelValueElement.textContent = currentLevel;
     xpValueElement.textContent = `${currentXP} / ${requiredXP}`;
 
@@ -137,9 +137,8 @@ const updateUI = () => {
 
 // 7. ENTER TUŞU İLE EKLEME ÖZELLİĞİ
 taskInput.addEventListener("keypress", (e) => {
-    // Eğer basılan tuşun adı "Enter" ise
     if (e.key === "Enter") {
-        addTask(); // Görev ekleme fonksiyonunu çalıştır
+        addTask();
     }
 });
 
