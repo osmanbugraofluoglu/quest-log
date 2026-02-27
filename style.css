@@ -36,7 +36,7 @@ body{
 }
 .profile-info p {
     font-size: 18px;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 h2, #level-value, #xp-value{
     font-family: 'Orbitron', sans-serif;
@@ -65,13 +65,13 @@ h2, #level-value, #xp-value{
     display: flex;
     justify-content: space-between; 
     align-items: center;
-    margin-bottom: 5px; 
+    margin-top: 25px; 
     font-weight: bold;
     font-size: 15px; 
 }
 /* Alt İstatistik Paneli */
 .extra-stats {
-    margin-top: 100px; 
+    margin-top: 120px; 
     padding-top: 25px;
     border-top: 1px dashed rgba(255, 255, 255, 0.2); 
     color: rgba(255, 255, 255, 0.6); 
@@ -95,7 +95,28 @@ h2, #level-value, #xp-value{
 .stat-row span:first-child {
     font-weight: normal; 
 }
+#reset-btn {
+    margin-top: 100px; 
+    padding: 10px;
+    background-color: rgba(239, 68, 68, 0.05);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 6px;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 100%; 
+}
 
+#reset-btn:hover {
+    background-color: #ef4444;
+    color: #1a2a1a; 
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
 /* MAIN */
 #app-container{
     padding: 40px;

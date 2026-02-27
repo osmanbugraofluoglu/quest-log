@@ -27,16 +27,19 @@ const updateExtraStatsUI = () => {
     statCompletedElement.textContent = totalCompleted;
     statDeletedElement.textContent = totalDeleted;
     statTotalXpElement.textContent = totalEarnedXP;
+
+    saveStatsToLocalStorage(); //istatistikler değişti hemen not ediyoruz
 };
 
 // 4. GÖREV EKLEME FONKSİYONU (ARROW FUNCTION)
-const addTask = () => {
-    //Kutudaki yazıyı al ve etrafındaki boşlukları sil
-    const taskText = taskInput.value.trim();
+const addTask = (savedText = null) => {
+    // Eğer dışarıdan metin gelmişse onu kullan, gelmemişse kutudaki yazıyı al
+    const taskText = savedText || taskInput.value.trim();
 
-    if (taskText === "") {
-        alert("Lütfen bir görev yazın!");
-        return
+    if (taskText === "" || taskText === null) { // Boşluk kontrolü
+        // Eğer hafızadan yükleme yapmıyorsak (yani manuel ekliyorsak) uyarı ver
+        if(!savedText) alert("Lütfen bir görev yazın!"); 
+        return;
     }
     //Yeni bir HTML elemanı (li) yarat ve giydir
     const newTaskItem = document.createElement("li");
@@ -76,7 +79,6 @@ const addTask = () => {
         currentXP += 30; 
         updateUI();
         
-        console.log("Görev başarıyla tamamlananlara taşındı!");
         totalCompleted++;
         totalEarnedXP += 30; 
         updateExtraStatsUI(); // Ekranda rakamları anında günceller
@@ -92,6 +94,8 @@ const addTask = () => {
 
         // Kartı her halükarda dünyadan tamamen sil
         newTaskItem.remove();
+
+        saveTasksToLocalStorage(); // Görev silindi, listeyi güncelle
 
         // Yeni rakamları istatistik paneline yansıt
         updateExtraStatsUI(); 
@@ -113,9 +117,13 @@ const addTask = () => {
     //İMLEÇ TEKRAR KUTUYA GELSİN
     taskInput.focus();
 
+    saveTasksToLocalStorage(); // Yeni görev geldi, listeyi güncelle
+
 };
 // 5. BUTONA TIKLAMA OLAYINI DİNLEME (EVENT LISTENER)
-addTaskBtn.addEventListener("click", addTask);
+// addTask'ı doğrudan yazarsan içine 'Event' paketini gönderir. 
+// Boş bir ok fonksiyonu ile çağırırsan tertemiz, argümansız çağırır.
+addTaskBtn.addEventListener("click", () => addTask());
 
 // 6. İSTATİSTİK GÜNCELLEME FONKSİYONU
 const updateUI = () => {
@@ -123,7 +131,7 @@ const updateUI = () => {
     if (currentXP >= requiredXP) {
         currentXP = currentXP - requiredXP;
         currentLevel++;
-        requiredXP += 50;
+        requiredXP += 30;
         alert(`TEBRİKLER! ${currentLevel}. Seviyeye Yükseldin.`);
     }
 
@@ -133,12 +141,82 @@ const updateUI = () => {
 
     const xpPercentage = (currentXP / requiredXP) * 100;
     xpBarFillElement.style.width = xpPercentage + "%";
+    saveStatsToLocalStorage(); //sayilar burada değişti ve hemen not ediyoruz
 };
 
-// 7. ENTER TUŞU İLE EKLEME ÖZELLİĞİ
+// YENİ VERİLERİ HAFIZAYA KAYDETME FONKSİYONU
+const saveStatsToLocalStorage = () => {
+    localStorage.setItem("currentLevel", currentLevel);
+    localStorage.setItem("currentXP", currentXP);
+    localStorage.setItem("requiredXP", requiredXP);
+    localStorage.setItem("totalCompleted", totalCompleted);
+    localStorage.setItem("totalDeleted", totalDeleted);
+    localStorage.setItem("totalEarnedXP", totalEarnedXP);
+};
+
+// 11. GÖREV LİSTESİNİ HAFIZAYA KAYDETME
+const saveTasksToLocalStorage = () => {
+    const allTasks = [];
+    // Sayfadaki tüm görevlerin yazılarını (span içindekileri) buluyoruz
+    const taskSpans = document.querySelectorAll("#task-list .task-item span");
+    
+    taskSpans.forEach(span => {
+        allTasks.push(span.textContent);
+    });
+    
+    // Listeyi "JSON" formatında metne çevirip kaydediyoruz
+    localStorage.setItem("savedTasks", JSON.stringify(allTasks));
+};
+
+// 7. HAFIZADAN VERİLERİ YÜKLEME FONKSİYONU
+const loadStatsFromLocalStorage = () => {
+    // Eğer Local Storage'da "currentLevel" diye bir kayıt varsa, demek ki daha önce oynanmış.
+    if (localStorage.getItem("currentLevel") !== null) {
+        // parseInt ile hafızadaki "yazıları" tekrar matematiksel sayılara çevirip değişkenlerimize eşitliyoruz.
+        currentLevel = parseInt(localStorage.getItem("currentLevel"));
+        currentXP = parseInt(localStorage.getItem("currentXP"));
+        requiredXP = parseInt(localStorage.getItem("requiredXP"));
+        
+        totalCompleted = parseInt(localStorage.getItem("totalCompleted"));
+        totalDeleted = parseInt(localStorage.getItem("totalDeleted"));
+        totalEarnedXP = parseInt(localStorage.getItem("totalEarnedXP"));
+    }
+    // --- GÖREV LİSTESİNİ GERİ YÜKLEME ---
+    const savedTasksJSON = localStorage.getItem("savedTasks");
+    if (savedTasksJSON !== null) {
+        const tasksArray = JSON.parse(savedTasksJSON);
+        
+        // Her bir görevi tek tek ekrana basıyoruz
+        tasksArray.forEach(taskText => {
+            addTask(taskText);
+        });
+    }
+};
+
+// ENTER TUŞU İLE EKLEME ÖZELLİĞİ
 taskInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
         addTask();
     }
 });
 
+// 8. SAYFA İLK AÇILDIĞINDA ÇALIŞACAK MOTOR
+// Önce hafızadaki verileri çekip değişkenlerimizi güncelliyoruz
+loadStatsFromLocalStorage();
+
+// Sonra güncellenmiş bu sayıları ekrandaki HTML arayüzüne (UI) basıyoruz
+updateUI();
+updateExtraStatsUI();
+
+// 10. İLERLEMEYİ SIFIRLAMA 
+const resetBtn = document.getElementById("reset-btn");
+
+resetBtn.addEventListener("click", () => {
+    // Tarayıcının kendi onay kutusunu çıkarıyoruz
+    const isConfirmed = confirm("Tüm seviye ve XP verilerin silinecek. Emin misin?");
+
+    if (isConfirmed) {
+        localStorage.clear(); // Bütün verileri siler
+        location.reload();    // Sayfayı F5 yapmışsın gibi yeniler
+    }
+});
