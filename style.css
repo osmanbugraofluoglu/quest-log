@@ -28,7 +28,7 @@ body{
 }
 /* HEADER */
 #hero-stats{
-    background-color: var(--grad-nature);
+    background: var(--grad-nature);
     padding: 30px;
     border-right: 2px solid var(--accent-leaf);
     display: flex;
@@ -114,7 +114,7 @@ h2, #level-value, #xp-value{
     flex-direction: column;
     gap: 12px;
 }
-#atsk-item{
+.task-item{
     background-color: var(--panel-moss);
     border-left: 4px solid var(--accent-leaf);
     padding: 15px 20px;
@@ -125,34 +125,72 @@ h2, #level-value, #xp-value{
     color: var(--text-cream);
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
-task-item:hover{
+.task-item:hover{
     transform: translateX(5px);
     background-color: #213b28;
 }
+/* TAMAMLANAN GÖREVLER BÖLÜMÜ */
+#completed-list-section h3{
+    color: var(--text-cream);
+    opacity: 0.6;
+    font-family: 'Orbiton', sans-serif;
+    border-bottom: 2px dashed var(--panel-moss);
+    padding-bottom: 10px;
+}
+#completed-task-list{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+/* BİTEN GÖREVİN KENDİ GÖRÜNÜMÜ - Sadece içindeki yazının üstünü çiz sil butonunun içindekini çizme*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.task-item.completed span {
+    text-decoration: line-through;
+    opacity: 0.7; /* Yazı biraz daha sönük olsun */
+}
+.task-item.completed{
+    border-left: 4px solid gray;
+}
+/* Butonun kendi halini netleştir (Daha güçlü seçici) */
+#completed-task-list .task-item .delete-btn {
+    opacity: 1 !important; /* !important ile kesinlikle parlamasını sağla */
+    filter: none; /* Griliği tamamen kaldır */
+}
+/* Üzerine gelince efekt devam etsin */
+#completed-task-list .task-item .delete-btn:hover {
+    transform: scale(1.1);
+    background-color: #ff0000; /* Hoverda daha canlı bir kırmızı */
+}
+/* BUTON TASARIMLARI */
+.task-buttons{
+    display: flex;
+    gap: 10px;
+}
+.complete-btn, .delete-btn{
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+/* TAMAMLA BUTONU - Yaprak Yeşili */
+.complete-btn{
+    background-color: var(--accent-leaf);
+    color: var(--bg-deep-forest);
+}
+.complete-btn:hover{
+    background-color: #3cb371;
+    transform: scale(1.05);
+}
+/* SİL BUTONU - Uyarı Kırmızısı */
+.delete-btn{
+    background-color: #ef4444;
+    color: white;
+}
+.delete-btn:hover{
+    background-color: #dc2626;
+    transform: scale(1.05);
+}
