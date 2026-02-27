@@ -35,10 +35,19 @@ body{
     flex-direction: column;
     gap: 25px;
 }
+.profile-info p {
+    font-size: 1.1em;
+    margin-top: 5px;
+}
 h2, #level-value, #xp-value{
     font-family: 'Orbitron', sans-serif;
     color: var(--accent-gold);
     letter-spacing: 1px;
+}
+#level-value {
+    font-weight: bold; /* Veya Orbitron'un kalınlık desteklerine göre 700 / 900 */
+    font-size: 1.5em; /* Rakamı metinden net bir şekilde ayırıp büyüt */
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6); /* Altın rengi hafif bir neon parlama */
 }
 .xp-bar-bg{
     width: 100%;
@@ -51,8 +60,43 @@ h2, #level-value, #xp-value{
     height: 100%;
     width: 0%;
     background: var(--grad-xp);
-    transition: width 1s ease-out;
+    transition: width 0.4s ease-out;
 }
+.xp-info {
+    display: flex;
+    justify-content: space-between; /* XP'yi sola, sayıları sağa yaslar */
+    align-items: center;
+    margin-bottom: 5px; /* Bar ile yazılar arasına minik bir nefes boşluğu */
+    font-weight: bold;
+    font-size: 0.9em; /* Sayılar çok kaba durmasın diye hafif küçülttük */
+}
+/* Alt İstatistik Paneli */
+.extra-stats {
+    margin-top: 100px; /* Üstteki bar ile arasını açar, boşluğu doldurur */
+    padding-top: 25px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.2); /* Üstüne ince, kesik bir çizgi çeker */
+    color: rgba(255, 255, 255, 0.6); /* Yazıları hafif soluk (gri/beyaz) yapar */
+    font-size: 15px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between; /* Yazı sola, sayı sağa */
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+/* Sadece Rakamların Stili */
+.stat-row span:last-child {
+    color: var(--accent-gold); /* Senin o meşhur altın sarın */
+    font-family: 'Orbitron', sans-serif; /* Rakamlar yine bilimkurgu fontunda */
+    font-weight: bold;
+    font-size: 18px;
+}
+.stat-row span:first-child {
+    font-weight: normal; 
+}
+
 /* MAIN */
 #app-container{
     padding: 40px;
@@ -133,7 +177,7 @@ h2, #level-value, #xp-value{
 #completed-list-section h3{
     color: var(--text-cream);
     opacity: 0.6;
-    font-family: 'Orbiton', sans-serif;
+    font-family: 'Orbitron', sans-serif;
     border-bottom: 2px dashed var(--panel-moss);
     padding-bottom: 10px;
 }
