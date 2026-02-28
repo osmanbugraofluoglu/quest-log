@@ -219,8 +219,9 @@ h2, #level-value, #xp-value{
 
 /* Üzerine gelince efekt devam etsin */
 #completed-task-list .task-item .delete-btn:hover {
-    transform: scale(1.1);
-    background-color: #ff0000; /* Hoverda daha canlı bir kırmızı */
+    transform: scale(1.02);
+    background-color: #dc2626; 
+    box-shadow: 0 0 12px rgba(255, 0, 0, 0.5);
 }
 /* BUTON TASARIMLARI */
 .task-buttons{
@@ -241,11 +242,12 @@ h2, #level-value, #xp-value{
     background-color: var(--accent-leaf);
     color: var(--bg-deep-forest);
 }
-.complete-btn:hover{
-    background-color: #3cb371;
+.complete-btn:hover {
+    background-color: #2df06b; /* Mat yeşil gitti, yerine capcanlı bir neon yeşil geldi */
     transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(45, 240, 107, 0.5); /* RPG oyunlarındaki o hafif parlama/glow efekti */
 }
-/* SİL BUTONU - Uyarı Kırmızısı */
+/* SİL BUTONU*/
 .delete-btn{
     background-color: #ef4444;
     color: white;
@@ -253,4 +255,93 @@ h2, #level-value, #xp-value{
 .delete-btn:hover{
     background-color: #dc2626;
     transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(255, 0, 0, 0.5);
+}
+
+/* --- MOBİL UYUM (RESPONSIVE DESIGN) --- */
+@media (max-width: 768px) {
+    .wrapper {
+        display: flex; 
+        flex-direction: column;
+        padding: 10px;
+        padding-bottom: 80px; /* Buton için altta yer açıyoruz */
+        position: relative; 
+    }
+    #hero-stats {
+        display: grid; /* Flex yerine Grid kullanıyoruz */
+        grid-template-columns: auto 1fr;
+        align-items: center; 
+        width: 100%;
+        border-right: none;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        padding: 15px; 
+        margin-bottom: 10px;
+        gap: 15px; 
+    }
+    .profile-info {
+        display: flex;
+        flex-direction: column; /* Alt alta dizer */
+        align-items: flex-start;
+    }
+    .profile-info p {
+        margin-top: 5px; 
+        font-size: 14px; 
+    }
+    .xp-container {
+        display: flex;
+        flex-direction: column;
+        width: 95%;
+        margin-left: auto;
+    }
+    .xp-info {
+        margin-top: 0; 
+        margin-bottom: 5px;
+        font-size: 13px;
+    }
+    .extra-stats {
+        grid-column: 1 / -1; /* Izgaranın en başından en sonuna kadar kapla demek */
+        margin-top: 0; 
+        padding-top: 15px;
+    }
+    .stat-row {
+        margin-bottom: 10px; 
+    }
+    #reset-btn {
+        position: absolute; 
+        bottom: 20px; 
+        left: 10px;
+        width: calc(100% - 20px); 
+        margin-top: 0;
+        padding: 12px;
+    }
+    #task-input-section {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    #task-input, #add-task-btn {
+        width: 100%;
+    }
+    #add-task-btn {
+        padding: 12px;
+    }
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 15px 10px;
+    }
+    .task-item span {
+        width: 100%;
+        word-wrap: break-word;
+    }
+    .task-buttons {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+    }
+    .complete-btn, .delete-btn {
+        flex: 1; 
+        padding: 12px;
+    }
 }

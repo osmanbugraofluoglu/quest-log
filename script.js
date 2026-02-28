@@ -32,7 +32,7 @@ const updateExtraStatsUI = () => {
 };
 
 // 4. GÖREV EKLEME FONKSİYONU (ARROW FUNCTION)
-const addTask = (savedText = null) => {
+const addTask = (savedText = null, isCompleted = false) => {
     // Eğer dışarıdan metin gelmişse onu kullan, gelmemişse kutudaki yazıyı al
     const taskText = savedText || taskInput.value.trim();
 
@@ -81,7 +81,10 @@ const addTask = (savedText = null) => {
         
         totalCompleted++;
         totalEarnedXP += 30; 
+
         updateExtraStatsUI(); // Ekranda rakamları anında günceller
+
+        saveTasksToLocalStorage();
     })
 
     // SİL BUTONU EYLEMİ
@@ -108,9 +111,16 @@ const addTask = (savedText = null) => {
     newTaskItem.appendChild(taskSpan);
     newTaskItem.appendChild(btnContainer);
 
-    //yeni elemanı sayfadaki listeye (ul) ekle
-    taskList.appendChild(newTaskItem);
-
+    // HANGİ LİSTEYE GİDECEK KONTROLÜ
+    if (isCompleted) {
+        // Eğer hafızadan "tamamlanmış" olarak geliyorsa
+        newTaskItem.classList.add("completed");
+        completeBtn.remove(); // Tamamlanan görevde bu buton olmaz
+        document.getElementById("completed-task-list").appendChild(newTaskItem);
+    } else {
+        // Normal yeni görevse
+        taskList.appendChild(newTaskItem);
+    }
     //İşlem bitince yazı kutusunu temizle
     taskInput.value = "";
 
@@ -156,16 +166,22 @@ const saveStatsToLocalStorage = () => {
 
 // 11. GÖREV LİSTESİNİ HAFIZAYA KAYDETME
 const saveTasksToLocalStorage = () => {
-    const allTasks = [];
-    // Sayfadaki tüm görevlerin yazılarını (span içindekileri) buluyoruz
-    const taskSpans = document.querySelectorAll("#task-list .task-item span");
-    
-    taskSpans.forEach(span => {
-        allTasks.push(span.textContent);
+    const activeTasks = [];
+    const completedTasks = [];
+
+    // 1. Aktif görevleri topla
+    document.querySelectorAll("#task-list .task-item span").forEach(span => {
+        activeTasks.push(span.textContent);
+    });
+
+    // 2. Tamamlanan görevleri topla
+    document.querySelectorAll("#completed-task-list .task-item span").forEach(span => {
+        completedTasks.push(span.textContent);
     });
     
-    // Listeyi "JSON" formatında metne çevirip kaydediyoruz
-    localStorage.setItem("savedTasks", JSON.stringify(allTasks));
+    // İkisini ayrı ayrı hafızaya yaz
+    localStorage.setItem("savedTasks", JSON.stringify(activeTasks));
+    localStorage.setItem("savedCompletedTasks", JSON.stringify(completedTasks));
 };
 
 // 7. HAFIZADAN VERİLERİ YÜKLEME FONKSİYONU
@@ -181,14 +197,24 @@ const loadStatsFromLocalStorage = () => {
         totalDeleted = parseInt(localStorage.getItem("totalDeleted"));
         totalEarnedXP = parseInt(localStorage.getItem("totalEarnedXP"));
     }
-    // --- GÖREV LİSTESİNİ GERİ YÜKLEME ---
+    // --- GÖREV LİSTELERİNİ GERİ YÜKLEME ---
+    // ÖNCE İKİSİNİ DE HAFIZADAN OKUYUP CEBE KOYUYORUZ (Üzerine yazılmayı önlemek için)
     const savedTasksJSON = localStorage.getItem("savedTasks");
+    const savedCompletedJSON = localStorage.getItem("savedCompletedTasks");
+
+    // SONRA AKTİFLERİ EKRANA BASIYORUZ
     if (savedTasksJSON !== null) {
         const tasksArray = JSON.parse(savedTasksJSON);
-        
-        // Her bir görevi tek tek ekrana basıyoruz
         tasksArray.forEach(taskText => {
-            addTask(taskText);
+            addTask(taskText, false);
+        });
+    }
+
+    // EN SON TAMAMLANANLARI EKRANA BASIYORUZ
+    if (savedCompletedJSON !== null) {
+        const completedArray = JSON.parse(savedCompletedJSON);
+        completedArray.forEach(taskText => {
+            addTask(taskText, true);
         });
     }
 };
