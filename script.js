@@ -121,11 +121,12 @@ const addTask = (savedText = null, isCompleted = false) => {
         // Normal yeni görevse
         taskList.appendChild(newTaskItem);
     }
-    //İşlem bitince yazı kutusunu temizle
-    taskInput.value = "";
-
-    //İMLEÇ TEKRAR KUTUYA GELSİN
-    taskInput.focus();
+    // SADECE MANUEL OLARAK YENİ GÖREV EKLİYORSAK İMLECİ ORAYA AT
+    // Eğer hafızadan (Local Storage) yükleniyorsa kutuya ve imlece dokunma!
+    if (!savedText) {
+        taskInput.value = "";
+        taskInput.focus();
+    }
 
     saveTasksToLocalStorage(); // Yeni görev geldi, listeyi güncelle
 
